@@ -1,4 +1,4 @@
-package infrastructure.service
+package infrastructure.http
 
 import java.net.URL
 import java.time.LocalDateTime
@@ -8,7 +8,7 @@ import scala.xml.XML
 
 class ProgramReadingServiceImpl extends ProgramReadingService {
 
-  override def readProgramList(): Seq[Program] = {
+  override def getAllProgram(): Seq[Program] = {
     val format = DateTimeFormatter.ofPattern("yyyyMMddHHmmss")
     val xml = XML.load(new URL("http://cal.syoboi.jp/cal_chk.php"))
     (xml \\ "ProgItem").map { e =>
