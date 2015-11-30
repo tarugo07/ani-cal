@@ -1,9 +1,11 @@
 package infrastructure.service
 
-case class Program(channelId: Int, channelName: String, title: String, subTitle: String, start: BigInt, end: BigInt)
+import java.time.LocalDateTime
+
+case class Program(channelId: Int, channelName: String, title: String, subTitle: String, start: LocalDateTime, end: LocalDateTime)
 
 trait ProgramReadingService {
 
-  def readProgram(): Seq[Program]
+  def readProgramList(): Seq[Program]
 
 }
