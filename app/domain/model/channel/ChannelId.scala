@@ -2,4 +2,4 @@ package domain.model.channel
 
 import domain.model.ValueObject
 
-case class ChannelId(id: Long) extends ValueObject
+case class ChannelId(value: Long) extends ValueObject
