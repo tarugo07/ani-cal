@@ -1,4 +1,4 @@
-package application.controllers
+package port.adapter.controllers
 
 import play.api._
 import play.api.mvc._
