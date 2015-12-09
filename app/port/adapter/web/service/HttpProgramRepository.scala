@@ -1,4 +1,4 @@
-package port.adapter.service
+package port.adapter.web.service
 
 import java.net.URL
 import java.time.{LocalDateTime, LocalDate}
@@ -9,7 +9,7 @@ import domain.model.program.{ProgramId, Program, ProgramRepository}
 
 import scala.xml.XML
 
-class WebAPIProgramRepository extends ProgramRepository {
+class HttpProgramRepository extends ProgramRepository {
 
   override def addPrograms(): Seq[Program] = {
     val format = DateTimeFormatter.ofPattern("yyyyMMddHHmmss")
