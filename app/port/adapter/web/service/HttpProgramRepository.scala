@@ -11,7 +11,7 @@ import scala.xml.XML
 
 class HttpProgramRepository extends ProgramRepository {
 
-  override def addPrograms(): Seq[Program] = {
+  override def allPrograms(): Seq[Program] = {
     val format = DateTimeFormatter.ofPattern("yyyyMMddHHmmss")
     val xml = XML.load(new URL("http://cal.syoboi.jp/cal_chk.php"))
     val list = (xml \\ "ProgItem").map { e =>
@@ -20,7 +20,7 @@ class HttpProgramRepository extends ProgramRepository {
         channel = Channel(id = ChannelId((e \ "@ChID").text.toLong), name = (e \ "@ChName").text),
         name = (e \ "@Title").text,
         title = (e \ "@SubTitle").text,
-        episode = (e \ "@Count").text.toInt,
+        episode = if ((e \ "@Count").text.isEmpty) 0 else (e \ "@Count").text.toInt,
         startTime = LocalDateTime.parse((e \ "@StTime").text, format),
         endTime = LocalDateTime.parse((e \ "@EdTime").text, format)
       )
@@ -38,7 +38,7 @@ class HttpProgramRepository extends ProgramRepository {
         channel = Channel(id = ChannelId((e \ "@ChID").text.toLong), name = (e \ "@ChName").text),
         name = (e \ "@Title").text,
         title = (e \ "@SubTitle").text,
-        episode = (e \ "@Count").text.toInt,
+        episode = if ((e \ "@Count").text.isEmpty) 0 else (e \ "@Count").text.toInt,
         startTime = LocalDateTime.parse((e \ "@StTime").text, format),
         endTime = LocalDateTime.parse((e \ "@EdTime").text, format)
       )

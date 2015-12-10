@@ -6,7 +6,7 @@ import domain.model.channel.Channel
 
 trait ProgramRepository {
 
-  def addPrograms(): Seq[Program]
+  def allPrograms(): Seq[Program]
 
   def allPrograms(date: LocalDate, channels: Seq[Channel]): Seq[Program]
 
