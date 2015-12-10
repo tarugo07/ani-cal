@@ -42,9 +42,7 @@ class HttpProgramRepository extends ProgramRepository {
         startTime = LocalDateTime.parse((e \ "@StTime").text, format),
         endTime = LocalDateTime.parse((e \ "@EdTime").text, format)
       )
-    }.filter { program =>
-      channels.exists(_ == program.channel)
-    }.sortWith((p1, p2) => p1.startTime.isBefore(p2.startTime))
+    }.filter(p => channels.contains(p.channel)).sortWith((p1, p2) => p1.startTime.isBefore(p2.startTime))
     list
   }
 
