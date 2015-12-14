@@ -2,6 +2,7 @@ package port.adapter.controllers
 
 import java.time.LocalDate
 
+import application.ProgramApplicationService
 import domain.model.channel.{Channel, ChannelId}
 import domain.model.program.{Program, ProgramId}
 import play.api.libs.json._
@@ -41,24 +42,10 @@ class ProgramController extends Controller {
   }
 
   val programRepository = new HttpProgramRepository
-  val channels = Seq(
-    Channel(id = ChannelId(value = 1), name = "NHK総合"),
-    Channel(id = ChannelId(value = 2), name = "NHK Eテレ"),
-    Channel(id = ChannelId(value = 3), name = "フジテレビ"),
-    Channel(id = ChannelId(value = 4), name = "日本テレビ"),
-    Channel(id = ChannelId(value = 5), name = "TBS"),
-    Channel(id = ChannelId(value = 6), name = "テレビ朝日"),
-    Channel(id = ChannelId(value = 7), name = "テレビ東京"),
-    Channel(id = ChannelId(value = 8), name = "tvk"),
-    Channel(id = ChannelId(value = 7), name = "テレビ東京"),
-    Channel(id = ChannelId(value = 8), name = "tvk"),
-    Channel(id = ChannelId(value = 19), name = "TOKYO MX"),
-    Channel(id = ChannelId(value = 20), name = "AT-X"),
-    Channel(id = ChannelId(value = 21), name = "アニマックス")
-  )
+  val programApplicationService = new ProgramApplicationService(programRepository)
 
   def list = Action {
-    val programs = programRepository.allProgramsOfDate(LocalDate.now(), channels)
+    val programs = programApplicationService.getProgramGuideOfKanto(LocalDate.now())
     Ok(Json.toJson(programs))
   }
 
