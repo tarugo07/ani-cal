@@ -8,7 +8,7 @@ import play.api.libs.json._
 import play.api.mvc._
 import port.adapter.web.service.HttpProgramRepository
 
-class Application extends Controller {
+class ProgramController extends Controller {
 
   implicit val channelIdWriters = new Writes[ChannelId] {
     override def writes(id: ChannelId): JsValue = Json.toJson(id.value)
@@ -57,8 +57,8 @@ class Application extends Controller {
     Channel(id = ChannelId(value = 21), name = "アニマックス")
   )
 
-  def index = Action {
-    val programs = programRepository.allPrograms(LocalDate.now(), channels)
+  def list = Action {
+    val programs = programRepository.allProgramsOfDate(LocalDate.now(), channels)
     Ok(Json.toJson(programs))
   }
 
