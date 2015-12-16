@@ -7,7 +7,7 @@ import domain.model.channel.{Channel, ChannelId}
 import domain.model.program.{Program, ProgramId}
 import play.api.libs.json._
 import play.api.mvc._
-import port.adapter.web.service.HttpProgramRepository
+import port.adapter.web.service.{HttpChannelRepository, HttpProgramRepository}
 
 class ProgramController extends Controller {
 
@@ -41,8 +41,9 @@ class ProgramController extends Controller {
     }
   }
 
+  val channelRepository = new HttpChannelRepository
   val programRepository = new HttpProgramRepository
-  val programApplicationService = new ProgramApplicationService(programRepository)
+  val programApplicationService = new ProgramApplicationService(channelRepository, programRepository)
 
   def list = Action {
     val programs = programApplicationService.getProgramGuideOfKanto(LocalDate.now())
