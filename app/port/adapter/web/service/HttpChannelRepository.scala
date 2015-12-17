@@ -11,7 +11,7 @@ class HttpChannelRepository extends ChannelRepository {
   override def allChannels(): Seq[Channel] = {
     val xml = XML.load(new URL("http://cal.syoboi.jp/db.php?Command=ChLookup"))
     val list = (xml \\ "ChItem").map { e =>
-      Channel(id = ChannelId((e \\ "@id").text.toLong), name = (e \ "ChName").text)
+      Channel(id = ChannelId((e \ "ChID").text.toLong), name = (e \ "ChName").text)
     }.sortWith((c1, c2) => c1.id.value < c2.id.value)
     list
   }
