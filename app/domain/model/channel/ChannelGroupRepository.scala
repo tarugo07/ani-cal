@@ -4,4 +4,6 @@ trait ChannelGroupRepository {
 
   def channelGroupOfId(id: ChannelGroupId): ChannelGroup
 
+  def allChannelGroup(): Seq[ChannelGroup]
+
 }

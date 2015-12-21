@@ -28,4 +28,12 @@ class HttpChannelGroupRepository extends ChannelGroupRepository {
     channelGroup.head
   }
 
+  override def allChannelGroup(): Seq[ChannelGroup] = {
+    val xml = XML.load(new URL("http://cal.syoboi.jp/db.php?Command=ChGroupLookup"))
+    val channelGroups = (xml \\ "ChGroupItem").map { e =>
+      channelGroupOfId(ChannelGroupId(value = (e \ "ChGID").text.toLong))
+    }
+    channelGroups
+  }
+
 }
