@@ -8,6 +8,6 @@ trait ProgramRepository {
 
   def allPrograms(): Seq[Program]
 
-  def allProgramsOfDate(date: LocalDate, channels: Seq[Channel]): Seq[Program]
+  def allProgramsOfDate(date: LocalDate, channels: Seq[Channel] = Seq.empty): Seq[Program]
 
 }

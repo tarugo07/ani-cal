@@ -28,7 +28,7 @@ class HttpProgramRepository extends ProgramRepository {
     list
   }
 
-  override def allProgramsOfDate(date: LocalDate, channels: Seq[Channel]): Seq[Program] = {
+  override def allProgramsOfDate(date: LocalDate, channels: Seq[Channel] = Seq.empty): Seq[Program] = {
     val url = "http://cal.syoboi.jp/cal_chk.php?start=%s&days=1".format(date)
     val format = DateTimeFormatter.ofPattern("yyyyMMddHHmmss")
     val xml = XML.load(new URL(url))
