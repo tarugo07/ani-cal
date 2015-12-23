@@ -46,8 +46,8 @@ class ProgramController extends Controller {
   val programRepository = new HttpProgramRepository
   val programApplicationService = new ProgramApplicationService(channelRepository, channelGroupRepository, programRepository)
 
-  def list = Action {
-    val programs = programApplicationService.getProgramGuideOfKanto(LocalDate.now())
+  def list(groupId: Long) = Action {
+    val programs = programApplicationService.getProgramGuide(LocalDate.now(), groupId)
     Ok(Json.toJson(programs))
   }
 

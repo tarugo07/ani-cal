@@ -16,4 +16,10 @@ class ProgramApplicationService
     programRepository.allProgramsOfDate(date, channels)
   }
 
+  def getProgramGuide(date: LocalDate, groupId: Long): Seq[Program] = {
+    val group = channelGroupRepository.channelGroupOfId(ChannelGroupId(value = groupId))
+    val channels = channelRepository.allChannelsOfGroup(group)
+    programRepository.allProgramsOfDate(date, channels)
+  }
+
 }
