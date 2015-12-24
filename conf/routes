@@ -3,7 +3,7 @@
 # ~~~~
 
 # Home page
-GET        /programs            port.adapter.controllers.ProgramController.list(groupId: Long = 1)
+GET        /programs            port.adapter.controllers.ProgramController.list(groupId: Long)
 
 GET        /groups              port.adapter.controllers.ChannelGroupController.list
 

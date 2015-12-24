@@ -2,8 +2,10 @@ package port.adapter.web.service
 
 import java.net.URL
 
+import domain.model.EntityNotFoundException
 import domain.model.channel._
 
+import scala.util.Try
 import scala.xml.XML
 
 class HttpChannelGroupRepository extends ChannelGroupRepository {
@@ -18,14 +20,17 @@ class HttpChannelGroupRepository extends ChannelGroupRepository {
     channelIds
   }
 
-  override def channelGroupOfId(id: ChannelGroupId): ChannelGroup = {
+  override def channelGroupOfId(id: ChannelGroupId): Try[ChannelGroup] = Try {
     val channelIds = allChannelIdsOfGroup(id)
     val url = "http://cal.syoboi.jp/db.php?Command=ChGroupLookup&ChGID=%d".format(id.value)
     val xml = XML.load(new URL(url))
     val channelGroup = (xml \\ "ChGroupItem").map { e =>
       ChannelGroup(id = id, name = (e \ "ChGroupName").text, channelIds = channelIds)
     }
-    channelGroup.head
+    if (channelGroup.nonEmpty)
+      channelGroup.head
+    else
+      throw EntityNotFoundException(s"ChannelGroup not found: id = ${id.value}")
   }
 
   override def allChannelGroup(): Seq[ChannelGroup] = {
