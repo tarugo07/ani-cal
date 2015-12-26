@@ -1,6 +1,7 @@
 package port.adapter.controllers
 
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 import application.ProgramApplicationService
 import domain.model.channel.{Channel, ChannelId}
@@ -8,6 +9,8 @@ import domain.model.program.{Program, ProgramId}
 import play.api.libs.json._
 import play.api.mvc._
 import port.adapter.web.service.{HttpChannelGroupRepository, HttpChannelRepository, HttpProgramRepository}
+
+import scala.util.{Failure, Success, Try}
 
 class ProgramController extends Controller {
 
@@ -46,8 +49,16 @@ class ProgramController extends Controller {
   val programRepository = new HttpProgramRepository
   val programApplicationService = new ProgramApplicationService(channelRepository, channelGroupRepository, programRepository)
 
-  def list(groupId: Long) = Action {
-    val programs = programApplicationService.getProgramGuide(LocalDate.now(), groupId)
+  def list(date: String, groupId: Long) = Action {
+    val formatter = DateTimeFormatter.ofPattern("yyyyMMdd")
+    val programs = Try {
+      LocalDate.parse(date, formatter)
+    } match {
+      case Success(searchDate) =>
+        programApplicationService.getProgramGuide(searchDate, groupId)
+      case Failure(ex) =>
+        Seq.empty
+    }
     Ok(Json.toJson(programs))
   }
 
