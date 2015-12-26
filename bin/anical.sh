@@ -1,6 +1,6 @@
 #!/bin/sh
 
-PROGRAM_API_URL="http://localhost:9000/programs"
+PROGRAM_API_URL="http://localhost:9000/programs?groupId=1"
 
 which jq > /dev/null 2>&1
 if [ $? -eq 1 ]; then
