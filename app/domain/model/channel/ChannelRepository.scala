@@ -1,9 +1,11 @@
 package domain.model.channel
 
+import scala.util.Try
+
 trait ChannelRepository {
 
-  def allChannels(): Seq[Channel]
+  def allChannels(): Try[Seq[Channel]]
 
-  def allChannelsOfGroup(group: ChannelGroup): Seq[Channel]
+  def allChannelsOfGroup(group: ChannelGroup): Try[Seq[Channel]]
 
 }

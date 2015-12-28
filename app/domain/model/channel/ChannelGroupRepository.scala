@@ -6,6 +6,6 @@ trait ChannelGroupRepository {
 
   def channelGroupOfId(id: ChannelGroupId): Try[ChannelGroup]
 
-  def allChannelGroup(): Seq[ChannelGroup]
+  def allChannelGroup(): Try[Seq[ChannelGroup]]
 
 }

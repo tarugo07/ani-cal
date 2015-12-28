@@ -4,11 +4,12 @@ import java.net.URL
 
 import domain.model.channel.{Channel, ChannelGroup, ChannelId, ChannelRepository}
 
+import scala.util.Try
 import scala.xml.XML
 
 class HttpChannelRepository extends ChannelRepository {
 
-  override def allChannels(): Seq[Channel] = {
+  override def allChannels(): Try[Seq[Channel]] = Try {
     val xml = XML.load(new URL("http://cal.syoboi.jp/db.php?Command=ChLookup"))
     val channels = (xml \\ "ChItem").map { e =>
       Channel(id = ChannelId((e \ "ChID").text.toLong), name = (e \ "ChName").text)
@@ -16,7 +17,7 @@ class HttpChannelRepository extends ChannelRepository {
     channels
   }
 
-  override def allChannelsOfGroup(group: ChannelGroup): Seq[Channel] = {
+  override def allChannelsOfGroup(group: ChannelGroup): Try[Seq[Channel]] = Try {
     val url = "http://cal.syoboi.jp/db.php?Command=ChLookup&ChID=%s"
       .format(group.channelIds.map(_.value.toString).mkString(","))
     val xml = XML.load(new URL(url))

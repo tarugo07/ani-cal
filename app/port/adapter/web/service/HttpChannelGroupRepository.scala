@@ -33,7 +33,7 @@ class HttpChannelGroupRepository extends ChannelGroupRepository {
       throw EntityNotFoundException(s"ChannelGroup not found: id = ${id.value}")
   }
 
-  override def allChannelGroup(): Seq[ChannelGroup] = {
+  override def allChannelGroup(): Try[Seq[ChannelGroup]] = Try {
     val groupXml = XML.load(new URL("http://cal.syoboi.jp/db.php?Command=ChGroupLookup"))
     val channelXml = XML.load(new URL("http://cal.syoboi.jp/db.php?Command=ChLookup"))
     val channelGroups = (groupXml \\ "ChGroupItem").map { group =>

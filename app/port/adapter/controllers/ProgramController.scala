@@ -10,7 +10,7 @@ import play.api.libs.json._
 import play.api.mvc._
 import port.adapter.web.service.{HttpChannelGroupRepository, HttpChannelRepository, HttpProgramRepository}
 
-import scala.util.{Failure, Success, Try}
+import scala.util.Try
 
 class ProgramController extends Controller {
 
@@ -51,14 +51,14 @@ class ProgramController extends Controller {
 
   def list(date: String, groupId: Long) = Action {
     val formatter = DateTimeFormatter.ofPattern("yyyyMMdd")
-    val programs = Try {
-      LocalDate.parse(date, formatter)
-    } match {
-      case Success(searchDate) =>
-        programApplicationService.getProgramGuide(searchDate, groupId)
-      case Failure(ex) =>
-        Seq.empty
-    }
+    val programs = {
+      for {
+        searchDate <- Try {
+          LocalDate.parse(date, formatter)
+        }
+        programs <- programApplicationService.getProgramGuide(searchDate, groupId)
+      } yield programs
+    }.getOrElse(Seq.empty)
     Ok(Json.toJson(programs))
   }
 

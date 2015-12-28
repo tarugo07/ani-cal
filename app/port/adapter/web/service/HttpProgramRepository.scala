@@ -1,17 +1,18 @@
 package port.adapter.web.service
 
 import java.net.URL
-import java.time.{LocalDateTime, LocalDate}
 import java.time.format.DateTimeFormatter
+import java.time.{LocalDate, LocalDateTime}
 
-import domain.model.channel.{ChannelId, Channel}
-import domain.model.program.{ProgramId, Program, ProgramRepository}
+import domain.model.channel.{Channel, ChannelId}
+import domain.model.program.{Program, ProgramId, ProgramRepository}
 
+import scala.util.Try
 import scala.xml.XML
 
 class HttpProgramRepository extends ProgramRepository {
 
-  override def allPrograms(): Seq[Program] = {
+  override def allPrograms(): Try[Seq[Program]] = Try {
     val format = DateTimeFormatter.ofPattern("yyyyMMddHHmmss")
     val xml = XML.load(new URL("http://cal.syoboi.jp/cal_chk.php"))
     val list = (xml \\ "ProgItem").map { e =>
@@ -28,7 +29,7 @@ class HttpProgramRepository extends ProgramRepository {
     list
   }
 
-  override def allProgramsOfDate(date: LocalDate, channels: Seq[Channel] = Seq.empty): Seq[Program] = {
+  override def allProgramsOfDate(date: LocalDate, channels: Seq[Channel] = Seq.empty): Try[Seq[Program]] = Try {
     val url = "http://cal.syoboi.jp/cal_chk.php?start=%s&days=1".format(date)
     val format = DateTimeFormatter.ofPattern("yyyyMMddHHmmss")
     val xml = XML.load(new URL(url))
