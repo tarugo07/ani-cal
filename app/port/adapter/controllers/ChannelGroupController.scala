@@ -1,6 +1,6 @@
 package port.adapter.controllers
 
-import domain.model.channel.{ChannelGroup, ChannelGroupId}
+import domain.model.channel.{ChannelGroup, ChannelGroupId, ChannelGroupRepository}
 import play.api.libs.json._
 import play.api.mvc._
 import port.adapter.web.service.HttpChannelGroupRepository
@@ -20,7 +20,9 @@ class ChannelGroupController extends Controller {
     }
   }
 
-  private val channelGroupRepository = new HttpChannelGroupRepository
+  private val channelGroupRepository = newChannelGroupRepository
+
+  protected[this] def newChannelGroupRepository(): ChannelGroupRepository = new HttpChannelGroupRepository
 
   def list = Action {
     val groups = channelGroupRepository.allChannelGroup().getOrElse(Seq.empty)
