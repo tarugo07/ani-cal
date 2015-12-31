@@ -20,7 +20,7 @@ class ChannelGroupController extends Controller {
     }
   }
 
-  val channelGroupRepository = new HttpChannelGroupRepository
+  private val channelGroupRepository = new HttpChannelGroupRepository
 
   def list = Action {
     val groups = channelGroupRepository.allChannelGroup().getOrElse(Seq.empty)
