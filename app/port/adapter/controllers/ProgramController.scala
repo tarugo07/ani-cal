@@ -4,8 +4,8 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 import application.ProgramApplicationService
-import domain.model.channel.{Channel, ChannelId}
-import domain.model.program.{Program, ProgramId}
+import domain.model.channel.{Channel, ChannelGroupRepository, ChannelId, ChannelRepository}
+import domain.model.program.{Program, ProgramId, ProgramRepository}
 import play.api.libs.json._
 import play.api.mvc._
 import port.adapter.web.service.{HttpChannelGroupRepository, HttpChannelRepository, HttpProgramRepository}
@@ -44,10 +44,17 @@ class ProgramController extends Controller {
     }
   }
 
-  val channelRepository = new HttpChannelRepository
-  val channelGroupRepository = new HttpChannelGroupRepository
-  val programRepository = new HttpProgramRepository
+  val channelRepository = newChannelRepository()
+  val channelGroupRepository = newChannelGroupRepository()
+  val programRepository = newProgramRepository()
+
   val programApplicationService = new ProgramApplicationService(channelRepository, channelGroupRepository, programRepository)
+
+  protected[this] def newChannelRepository(): ChannelRepository = new HttpChannelRepository
+
+  protected[this] def newChannelGroupRepository(): ChannelGroupRepository = new HttpChannelGroupRepository
+
+  protected[this] def newProgramRepository(): ProgramRepository = new HttpProgramRepository
 
   def list(date: String, groupId: Long) = Action {
     val formatter = DateTimeFormatter.ofPattern("yyyyMMdd")
