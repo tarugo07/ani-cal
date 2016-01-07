@@ -8,9 +8,9 @@ import domain.model.program.{Program, ProgramRepository}
 import scala.util.Try
 
 class ProgramApplicationService
-(val channelRepository: ChannelRepository,
- val channelGroupRepository: ChannelGroupRepository,
- val programRepository: ProgramRepository) {
+(channelRepository: ChannelRepository,
+ channelGroupRepository: ChannelGroupRepository,
+ programRepository: ProgramRepository) {
 
   def getProgramGuide(date: LocalDate, groupId: Long): Try[Seq[Program]] = {
     for {
