@@ -1,4 +1,4 @@
-package port.adapter.controllers
+package port.adapter.ui.controllers
 
 import domain.model.channel.{ChannelGroup, ChannelGroupId, ChannelGroupRepository}
 import play.api.libs.json._
@@ -20,7 +20,7 @@ class ChannelGroupController extends Controller {
     }
   }
 
-  private val channelGroupRepository = newChannelGroupRepository
+  private val channelGroupRepository = newChannelGroupRepository()
 
   protected[this] def newChannelGroupRepository(): ChannelGroupRepository = new HttpChannelGroupRepository
 

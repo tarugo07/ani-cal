@@ -1,4 +1,4 @@
-package port.adapter.controllers
+package port.adapter.ui.controllers
 
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter

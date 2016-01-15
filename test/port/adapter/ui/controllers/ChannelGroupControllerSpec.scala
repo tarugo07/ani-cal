@@ -1,4 +1,4 @@
-package port.adapter.controllers
+package port.adapter.ui.controllers
 
 import domain.model.channel.{ChannelGroup, ChannelGroupId, ChannelGroupRepository, ChannelId}
 import org.specs2.mock._
