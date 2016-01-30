@@ -1,4 +1,4 @@
-package port.adapter.web.service
+package port.adapter.service
 
 import java.net.URL
 

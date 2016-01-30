@@ -8,8 +8,8 @@ import domain.model.channel.{ChannelGroupRepository, ChannelRepository}
 import domain.model.program.ProgramRepository
 import play.api.libs.json._
 import play.api.mvc._
+import port.adapter.service.{HttpChannelGroupRepository, HttpChannelRepository, HttpProgramRepository}
 import port.adapter.ui.json.ProgramWriters.programWriters
-import port.adapter.web.service.{HttpChannelGroupRepository, HttpChannelRepository, HttpProgramRepository}
 
 import scala.util.Try
 
